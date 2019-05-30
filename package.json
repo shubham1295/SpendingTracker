@@ -1,0 +1,19 @@
+{
+  "name": "regal_gaming",
+  "version": "1.0.0",
+  "description": "Website for Regal Gaming",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mursil Khan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.6",
+    "mongoose": "^5.3.1",
+    "morgan": "^1.9.1"
+  }
+}
