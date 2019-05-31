@@ -23,23 +23,29 @@ router.get("/", (req, res, next) => {
         }
     ]).exec().then(result => {
         console.log(result);
-        res.status(200).json(result);
+        // res.status(200).json(result);
+        res.status(200).render('index', { total: result });
     })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
-    
+
 });
 
 router.post("/", (req, res, next) => {
+    var bodyDate = new Date();
+    bodyDate = GetFormattedDate(req.body.date);
+
     const spend = new Spending({
         _id: new mongoose.Types.ObjectId(),
         item: req.body.item,
-        date: req.body.date,
+        date: bodyDate,
         cost: req.body.cost
     });
 
+    //Format Selected Date by +1
+    spend.date.setDate(spend.date.getDate() +1);
     spend.save()
     .then(result => {
         res.status(200).json({
@@ -52,4 +58,16 @@ router.post("/", (req, res, next) => {
     });
 
 });
+
 module.exports = router;
+
+function GetFormattedDate(mydate) {
+    var fields = mydate.split('/');
+
+    var day = fields[0];
+    var month = fields[1];
+    var year = fields[2];
+
+    date= year+-+month+-+day;
+    return date
+}
