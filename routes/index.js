@@ -7,13 +7,14 @@ const Spending = require('../models/spending');
 router.get("/", (req, res, next) => {
 
     var currentDate = new Date(); 
+    // var currMonth = 5;                                          //Remove 
     var currMonth = currentDate.getMonth()+1;
 
     // res.status(200).json({
     //     message: month,
     // });
 
-    Spending.aggregate([
+   Spending.aggregate([
         { $project: { month: { $month: '$date' }, cost: true } },
         { $match: { month: currMonth } },
         { $group: {
@@ -22,6 +23,10 @@ router.get("/", (req, res, next) => {
             }
         }
     ]).exec().then(result => {
+        if(result.length == 0){
+            //If result is null set total amount to 0
+            result = [{_id: null, total: 0}];
+        }
         console.log(result);
         // res.status(200).json(result);
         res.status(200).render('index', { total: result });
@@ -35,7 +40,7 @@ router.get("/", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     var bodyDate = new Date();
-    bodyDate = GetFormattedDate(req.body.date);
+    bodyDate = GetFormattedDate(req.body.date); //Remove this to work on postman
 
     const spend = new Spending({
         _id: new mongoose.Types.ObjectId(),
