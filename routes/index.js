@@ -62,6 +62,63 @@ router.post("/", (req, res, next) => {
         console.log(err);
     });
 
+
+    // res.status(200).json({
+    //     message: 'Index page POST request',
+    //     spend: spend
+    // });
+
+});
+
+
+//sample URL    http://localhost:3000/date?sdate=2019-06-02&edate=2019-06-30
+router.get("/date", (req, res, next) => {
+
+    // res.status(200).json({
+    //     message:  req.query.sdate
+    // });
+
+    // Spending.find({
+    //     date: { $gte: req.query.sdate, $lte: new Date() }
+    // })
+    // .then(result => {
+    //     res.status(200).json({
+    //         message: result
+    //     });
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
+
+
+    if(req.query.edate == ""){
+        Spending.find({
+            date: { $gte: req.query.sdate, $lte: req.query.edate }
+        })
+        .then(result => {
+            res.status(200).json({
+                message: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }else{
+        Spending.find({
+            date: { $gte: req.query.sdate, $lte: new Date() }
+        })
+        .then(result => {
+            // res.status(200).json({
+            //     message: result
+            // });
+            // res.send({result: result})
+            res.status(200).render('date', { result: result });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
 });
 
 module.exports = router;
