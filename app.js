@@ -6,7 +6,7 @@ var mongoose    = require("mongoose");
 
 var index = require('./routes/index');
 
-const dbLink = "mongodb+srv://shubham:shubham@cluster0-iolos.mongodb.net/pub?retryWrites=true";
+const dbLink = process.env.DATABASE_URL;
 // Mlab connectivity
 mongoose.connect(dbLink, { useNewUrlParser: true}, function(err){
     if(err) {
