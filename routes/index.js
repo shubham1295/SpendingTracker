@@ -29,7 +29,7 @@ router.get("/", (req, res, next) => {
         }
         console.log(result);
         // res.status(200).json(result);
-        res.status(200).render('index', { total: result });
+        res.status(200).render('index', { total: result, date: currentDate.getDate()});
     })
     .catch(err => {
         console.log(err);
@@ -49,14 +49,16 @@ router.post("/", (req, res, next) => {
         cost: req.body.cost
     });
 
-    //Format Selected Date by +1
+    // Format Selected Date by +1
     spend.date.setDate(spend.date.getDate() +1);
     spend.save()
     .then(result => {
-        res.status(200).json({
-            message: 'Index page POST request',
-            spend: result
-        });
+        // res.status(200).json({
+        //     message: 'Index page POST request',
+        //     spend: result
+        // });
+        console.log(result);
+        res.redirect('/');          //temp fix
     })
     .catch(err => {
         console.log(err);
