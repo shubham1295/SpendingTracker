@@ -43,7 +43,6 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    // var bodyDate = new Date();
     var bodyDate = GetFormattedDate(req.body.date); //Remove this to work on postman
 
     const spend = new Spending({
