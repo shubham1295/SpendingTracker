@@ -33,7 +33,7 @@ router.get("/", (req, res, next) => {
         }
         console.log(result);
         // res.status(200).json(result);
-        res.status(200).render('index', { total: result, month: monthNames[currentDate.getUTCMonth()], year: currentDate.getFullYear()});
+        res.status(200).render('index', { total: result, month: monthNames[currMonth], year: currentDate.getFullYear()});
     })
     .catch(err => {
         console.log(err);
@@ -95,15 +95,15 @@ router.get("/date", (req, res, next) => {
     //     console.log(err);
     // });
 
-
-    if(req.query.edate == ""){
+    if(req.query.edate != ""){
         Spending.find({
             date: { $gte: req.query.sdate, $lte: req.query.edate }
         })
         .then(result => {
-            res.status(200).json({
-                message: result
-            });
+            // res.status(200).json({
+            //     message: result
+            // });
+            res.status(200).render('date', { result: result });
         })
         .catch(err => {
             console.log(err);
@@ -123,7 +123,6 @@ router.get("/date", (req, res, next) => {
             console.log(err);
         });
     }
-
 });
 
 module.exports = router;
