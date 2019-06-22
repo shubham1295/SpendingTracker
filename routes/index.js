@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 
 const Spending = require('../models/spending');
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+
 router.get("/", (req, res, next) => {
 
-    var currentDate = new Date(); 
-    // var currMonth = 5;                                          //Remove 
+    var currentDate = new Date();
     var currMonth = currentDate.getMonth()+1;
 
     // res.status(200).json({
@@ -29,7 +33,7 @@ router.get("/", (req, res, next) => {
         }
         console.log(result);
         // res.status(200).json(result);
-        res.status(200).render('index', { total: result, date: currentDate.getDate()});
+        res.status(200).render('index', { total: result, month: monthNames[currentDate.getUTCMonth()], year: currentDate.getFullYear()});
     })
     .catch(err => {
         console.log(err);
@@ -39,8 +43,8 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    var bodyDate = new Date();
-    bodyDate = GetFormattedDate(req.body.date); //Remove this to work on postman
+    // var bodyDate = new Date();
+    var bodyDate = GetFormattedDate(req.body.date); //Remove this to work on postman
 
     const spend = new Spending({
         _id: new mongoose.Types.ObjectId(),
