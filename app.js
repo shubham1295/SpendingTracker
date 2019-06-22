@@ -3,6 +3,7 @@ var app = express();
 var morgan = require('morgan');
 var bodyParser  = require("body-parser");
 var mongoose    = require("mongoose");
+require('custom-env').env()
 
 var index = require('./routes/index');
 
