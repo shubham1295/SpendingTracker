@@ -31,9 +31,15 @@ router.get("/", (req, res, next) => {
             //If result is null set total amount to 0
             result = [{_id: null, total: 0}];
         }
-        console.log(result);
+        // console.log(result);
         // res.status(200).json(result);
-        res.status(200).render('index', { total: result, month: monthNames[currMonth], year: currentDate.getFullYear()});
+        if("development" === process.env.NODE_ENV){
+            res.status(200).render('test', { total: result, month: monthNames[currMonth], year: currentDate.getFullYear() });
+        }
+        else {
+            res.status(200).render('index', { total: result, month: monthNames[currMonth], year: currentDate.getFullYear()});
+        }
+        
     })
     .catch(err => {
         console.log(err);
