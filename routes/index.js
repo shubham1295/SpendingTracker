@@ -58,8 +58,7 @@ router.post("/", (req, res, next) => {
         cost: req.body.cost
     });
 
-    // Format Selected Date by +1
-    spend.date.setDate(spend.date.getDate() +1);
+    spend.date.setDate(spend.date.getDate());
     spend.save()
     .then(result => {
         // res.status(200).json({
