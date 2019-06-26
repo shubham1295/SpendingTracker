@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-
+const Sugar = require('sugar');
 const Spending = require('../models/spending');
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
