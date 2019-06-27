@@ -19,6 +19,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <!-- For Date -->
+    <link rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
@@ -35,28 +36,83 @@
             <h1> <%= total[0].total %> </h1>
             <h6> <%= month %>  <%= year %></h6>
             <hr>
-            <form method="post" action="/" class="myForm">
+            <form class="myForm" method="post" action="/">  <!-- method="post" action="/"  -->
               <div class="form-group">
                   <label for="example-text-input">Item</label>
-                  <input class="form-control" type="text" id="item" name="item">
+                  <input class="form-control" type="text" id="item" name="item" required>
               </div>
       
               <div class="form-group">
                   <label for="example-text-input">Price</label>
-                  <input class="form-control" type="Number" id="cost" name="cost" min="1">
+                  <input class="form-control" type="Number" id="cost" name="cost" min="1" required>
               </div>
       
               <div class="form-group">
                   <label for="example-text-input">Date</label>
-                  <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text"/>
+                  <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" required/>
 
               </div>
               <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect btn btn-primary" id="demo-show-toast" >Submit</button>
               <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="show-data" >Show</button> -->
             </form>
+
+        <% if ("active" === process.env.UI_SEARCH_DATE) { %>
+          <br><br>
+              <div id="accordion">
+                  <div class="card">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="background-color: whitesmoke">
+                      <div class="card-header" id="headingOne" style="text-align: left; text-decoration: none; background-color: whitesmoke">  
+                        <!-- <h5 class="mb-0"> -->
+                          <!-- <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
+                            <b>Search By Date</b>
+                          <!-- </button> -->
+                        <!-- </h5> -->
+                      </div>
+                    </button>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                      <div class="card-body">
+                        
+                          <form method="get" action="/date">
+                              <div class="form-group">
+                                  <label for="example-text-input">Start Date</label>
+                                  <input class="form-control" id="date" name="sdate" placeholder="DD/MM/YYYY" type="text" required/>
+                              </div>
+                              <div class="form-group">
+                                  <label for="example-text-input">End Date</label>
+                                  <input class="form-control" id="date" name="edate" placeholder="DD/MM/YYYY" type="text"/>
+                              </div>
+                              <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="show-data" >Show</button>
+                          </form>
+                        </div>
+        
+                      </div>
+                    </div>
+                </div>
+        <% } %>
+
+            <div class="mdl-cell mdl-cell--3-col"></div>
+
+            <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i< item.length; i++) { %>
+                            <tr>
+                                <td><%= item[i]._id %></td>
+                                <td><%= item[i].cost %></td>
+                                <td><%= item[i].date %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+            </table>
+            
           </div>
 
-          <div class="mdl-cell mdl-cell--3-col"></div>
     </div> 
 
 </body>
