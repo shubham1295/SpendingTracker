@@ -13,7 +13,7 @@ router.get("/", (req, res, next) => {
 
     var currentDate = new Date();
     var currMonth = currentDate.getMonth()+1;
-
+    
     // res.status(200).json({
     //     message: month,
     // });
@@ -31,14 +31,36 @@ router.get("/", (req, res, next) => {
             //If result is null set total amount to 0
             result = [{_id: null, total: 0}];
         }
-        // console.log(result);
-        // res.status(200).json(result);
-        if("development" === process.env.NODE_ENV){
-            res.status(200).render('test', { total: result, month: monthNames[currMonth], year: currentDate.getFullYear() });
-        }
-        else {
-            res.status(200).render('index', { total: result, month: monthNames[currMonth], year: currentDate.getFullYear()});
-        }
+
+        console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
+        Spending.aggregate([
+            { $match: { date: {$gte: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
+            { $group: {
+                    _id: "$item",
+                    cost: { $first: '$cost' },
+                    date: { $first: '$date' },
+                }
+            },
+            { $project: { 
+                    _id: true,
+                    item: true, 
+                    cost: true, 
+                    date: { $dateToString: { format: "%d/%m/%G",date: "$date" } } 
+                } 
+            }
+        ]).then(test => {
+            console.log(test,result);
+            // res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+            if("development" === process.env.NODE_ENV){
+                res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+            }
+            else {
+                res.status(200).render('index', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+            }
+        }).catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+        });
         
     })
     .catch(err => {
@@ -59,14 +81,15 @@ router.post("/", (req, res, next) => {
     });
 
     spend.date.setDate(spend.date.getDate());
-    spend.save()
-    .then(result => {
+
+    spend.save().then(result => {
         // res.status(200).json({
         //     message: 'Index page POST request',
         //     spend: result
         // });
         console.log(result);
         res.redirect('/');          //temp fix
+        // res.send(result);
     })
     .catch(err => {
         console.log(err);
@@ -100,22 +123,46 @@ router.get("/date", (req, res, next) => {
     //     console.log(err);
     // });
 
+    sdate = GetFormattedDate(req.query.sdate);
+    edate = GetFormattedDate(req.query.edate);
+    console.log(sdate, ":", edate)
     if(req.query.edate != ""){
         Spending.find({
-            date: { $gte: req.query.sdate, $lte: req.query.edate }
+            date: { $gte: sdate, $lte: edate }
         })
         .then(result => {
             // res.status(200).json({
             //     message: result
             // });
+            // date = GetFormattedDate(result.date);
             res.status(200).render('date', { result: result });
         })
         .catch(err => {
             console.log(err);
         });
+
+
+        // Spending.aggregate([
+        //     { $project: {
+        //             item: true,
+        //             cost: true,
+        //             date: { $dateToString: { format: "%d/%m/%G",date: "$date" } }
+        //         }
+        //     },
+        //     { $match: {date: { $gte: sdate }} }
+        // ]).then(result => {
+        //     // res.status(200).json({
+        //     //     message: result
+        //     // });
+        //     // date = GetFormattedDate(result.date);
+        //     res.status(200).render('date', { result: result });
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // });
     }else{
         Spending.find({
-            date: { $gte: req.query.sdate, $lte: new Date() }
+            date: { $gte: sdate, $lte: new Date() }
         })
         .then(result => {
             // res.status(200).json({
@@ -132,13 +179,13 @@ router.get("/date", (req, res, next) => {
 
 module.exports = router;
 
-function GetFormattedDate(mydate) {
-    var fields = mydate.split('/');
+function GetFormattedDate(date) {
+    var fields = date.split('/');
 
     var day = fields[0];
     var month = fields[1];
     var year = fields[2];
 
     date= year+-+month+-+day;
-    return date
+    return date;
 }
