@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var date_input=$('input[name="date"]'); //our date input has the name "date"
+  var date_input=$('input[id="date"]'); //our date input has the name "date"
   var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
   var options={
     format: 'dd/mm/yyyy',
@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 });
 
-
+// toast ka JS
 (function toastBar() {
   var snackbarContainer = document.querySelector('#demo-toast-example');
   var showToastButton = document.querySelector('#demo-show-toast');
@@ -22,3 +22,27 @@ $(document).ready(function(){
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
   });
 } ());
+
+
+$(".myForm").submit(function(e) {
+
+  e.preventDefault(); 
+
+  var form = $(this);
+  var url = form.attr('action');
+
+  $.ajax({
+         type: "POST",
+         url: url,
+         data: form.serialize(), 
+         success: function(data)
+         {
+            $("#total-amount").text(parseInt($("#total-amount").text()) + data.result.cost);
+
+            // $("#table-body").append('<tr><td>' + data.result.item + '</td><td>' + data.result.cost + '</td><td>' + data.result.date + '</td></tr>');
+
+         }
+       });
+
+
+});
