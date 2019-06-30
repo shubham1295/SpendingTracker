@@ -18,67 +18,12 @@ router.get("/", (req, res, next) => {
     //     message: month,
     // });
 
-//    Spending.aggregate([
-//         { $project: { month: { $month: '$date' }, cost: true } },
-//         { $match: { month: currMonth } },
-//         { $group: {
-//             _id: null,
-//             total: { $sum: '$cost'}
-//             }
-//         }
-//     ]).exec().then(result => {
-//         if(result.length == 0){
-//             //If result is null set total amount to 0
-//             result = [{_id: null, total: 0}];
-//         }
-
-//         console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
-//         Spending.aggregate([
-//             { $match: { date: {$gte: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
-//             { $group: {
-//                     _id: "$_id",
-//                     item: { $first: '$item' },
-//                     cost: { $first: '$cost' },
-//                     date: { $first: '$date' },
-//                 }
-//             },
-//             { $project: { 
-//                     _id: true,
-//                     item: true, 
-//                     cost: true, 
-//                     date: { $dateToString: { format: "%d/%m/%G",date: "$date" } } 
-//                 } 
-//             }
-//         ]).then(test => {
-//             console.log(test,result);
-//             // res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-//             if("development" === process.env.NODE_ENV){
-//                 res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-//             }
-//             else {
-//                 res.status(200).render('index', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-//             }
-//         }).catch(err => {
-//                 console.log(err);
-//                 res.status(500).json(err);
-//         });
+    GetQuery(Spending, function(result, test){
+        // console.log(result,test);
+        var totalExp = formatMoney(result[0].total);
         
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         res.status(500).json(err);
-//     });
-
-
-    GetQuery(Spending,currMonth, function(result, test){
-        console.log("this:",result,test);
-
-        if("development" === process.env.NODE_ENV){
-            res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-        }
-        else {
-            res.status(200).render('index', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-        }
+        res.status(200).render('index', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+        
 
     });
 
@@ -195,6 +140,17 @@ router.post("/", (req, res, next) => {
 //     }
 // });
 
+router.get("/price", (req, res, next) => {
+    GetQuery(Spending, function(result, test){
+        // console.log(result,test);
+        var totalExp = formatMoney(result[0].total);
+        // res.status(200).render('test', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ totalExp,test }, null, 3));
+        console.log(totalExp,test);
+    });
+});
+
 module.exports = router;
 
 function GetFormattedDate(date) {
@@ -208,7 +164,10 @@ function GetFormattedDate(date) {
     return date;
 }
 
-function GetQuery(Spending,currMonth,callback){
+function GetQuery(Spending,callback){
+    var currentDate = new Date();
+    var currMonth = currentDate.getMonth()+1;
+
     Spending.aggregate([
         { $project: { month: { $month: '$date' }, cost: true } },
         { $match: { month: currMonth } },
@@ -223,7 +182,7 @@ function GetQuery(Spending,currMonth,callback){
             result = [{_id: null, total: 0}];
         }
 
-        console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
+        // console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
         Spending.aggregate([
             { $match: { date: {$gte: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
             { $group: {
@@ -262,3 +221,20 @@ function GetQuery(Spending,currMonth,callback){
         res.status(500).json(err);
     });
 }
+
+
+function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+    try {
+      decimalCount = Math.abs(decimalCount);
+      decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+  
+      const negativeSign = amount < 0 ? "-" : "";
+  
+      let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+      let j = (i.length > 3) ? i.length % 3 : 0;
+  
+      return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+    } catch (e) {
+      console.log(e)
+    }
+  };

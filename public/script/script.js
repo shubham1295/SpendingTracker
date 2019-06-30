@@ -13,17 +13,6 @@ $(document).ready(function(){
 
 });
 
-// toast ka JS
-(function toastBar() {
-  var snackbarContainer = document.querySelector('#demo-toast-example');
-  var showToastButton = document.querySelector('#demo-show-toast');
-  showToastButton.addEventListener('click', function () {
-    var data = { message: 'Data Saved' };
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-  });
-} ());
-
-
 $(".myForm").submit(function(e) {
 
   e.preventDefault(); 
@@ -37,12 +26,27 @@ $(".myForm").submit(function(e) {
          data: form.serialize(), 
          success: function(data)
          {
-            $("#total-amount").text(parseInt($("#total-amount").text()) + data.result.cost);
+            // $("#total-amount").text(parseInt($("#total-amount").text()) + data.result.cost);
 
             // $("#table-body").append('<tr><td>' + data.result.item + '</td><td>' + data.result.cost + '</td><td>' + data.result.date + '</td></tr>');
+            $.ajax({
+              type: "GET",
+              url: '/price',
+              dataType:"json",
+              success: function(data)
+              {
+                // console.log(data.totalExp);
+                $("#total-amount").text(data.totalExp);
 
+                $('.myForm')[0].reset();
+                // toast ka JS
+                var snackbarContainer = document.querySelector('#demo-toast-example');
+                var data = { message: 'Data Saved' };
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+              }
+            });
+            
          }
        });
-
 
 });
