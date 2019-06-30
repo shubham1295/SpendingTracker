@@ -29,7 +29,6 @@ $(".myForm").submit(function(e) {
             // $("#total-amount").text(parseInt($("#total-amount").text()) + data.result.cost);
 
             // $("#table-body").append('<tr><td>' + data.result.item + '</td><td>' + data.result.cost + '</td><td>' + data.result.date + '</td></tr>');
-            
             $.ajax({
               type: "GET",
               url: '/price',

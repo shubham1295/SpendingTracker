@@ -21,12 +21,9 @@ router.get("/", (req, res, next) => {
     GetQuery(Spending, function(result, test){
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
-        if("development" === process.env.NODE_ENV){
-            res.status(200).render('test', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-        }
-        else {
-            res.status(200).render('index', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-        }
+        
+        res.status(200).render('index', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+        
 
     });
 
@@ -144,19 +141,13 @@ router.post("/", (req, res, next) => {
 // });
 
 router.get("/price", (req, res, next) => {
-
     GetQuery(Spending, function(result, test){
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
-        if("development" === process.env.NODE_ENV){
-            // res.status(200).render('test', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ totalExp,test }, null, 3));
-            console.log(totalExp,test);
-        }
-        else {
-            // res.status(200).render('index', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-        }
+        // res.status(200).render('test', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ totalExp,test }, null, 3));
+        console.log(totalExp,test);
     });
 });
 
@@ -191,7 +182,7 @@ function GetQuery(Spending,callback){
             result = [{_id: null, total: 0}];
         }
 
-        console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
+        // console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
         Spending.aggregate([
             { $match: { date: {$gte: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
             { $group: {

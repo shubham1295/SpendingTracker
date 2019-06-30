@@ -32,6 +32,9 @@
         <div class="mdl-cell mdl-cell--3-col"></div>
 
         <div class="mdl-cell mdl-cell--6-col">
+          <% if ("active" === process.env.UI_SEARCH_DATE && "development" === process.env.NODE_ENV) { %>
+            <h5 style="color: red">Test page</h5>
+          <% } %>
           <!-- ADD FORM -->
           <h1 style="display: inline">&#8377</h1>
           <h1 id="total-amount" style="display: inline"><%= total %></h1>
@@ -54,7 +57,6 @@
 
             </div>
             <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect btn btn-primary" id="demo-show-toast" >Submit</button>
-            <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="show-data" >Show</button> -->
           </form>
 
         <% if ("active" === process.env.UI_SEARCH_DATE) { %>
