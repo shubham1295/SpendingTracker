@@ -151,6 +151,18 @@ router.get("/price", (req, res, next) => {
     });
 });
 
+router.get('/search_item', (req,res,next) => {
+    Spending.distinct('item')
+    .then(result => {
+        res.status(200).json({
+            message: result
+        });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
 module.exports = router;
 
 function GetFormattedDate(date) {
