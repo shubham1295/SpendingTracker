@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script defer src="script/script.js"></script>
+
 
   <title>Spending Tracker</title>
 
@@ -27,21 +27,21 @@
 </head>
 
 <body>
-
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--3-col"></div>
 
         <div class="mdl-cell mdl-cell--6-col">
           <% if ("active" === process.env.UI_SEARCH_DATE && "development" === process.env.NODE_ENV) { %>
-            <h5 style="color: red">Test page</h5>
+            <h5 style="color: red">Test page</h5>            
           <% } %>
+
           <!-- ADD FORM -->
           <h1 style="display: inline">&#8377</h1>
           <h1 id="total-amount" style="display: inline"><%= total %></h1>
           <h6> <%= month %>  <%= year %></h6>
           <hr>
           <form class="myForm" action="/">  <!-- method="post" action="/"  -->
-            <div class="form-group">
+            <div class="autocomplete form-group">
                 <label for="example-text-input">Item</label>
                 <input class="form-control" type="text" id="item" name="item" required>
             </div>
@@ -124,6 +124,7 @@
     <button class="mdl-snackbar__action" type="button"></button>
     </div>
 
+    <script defer src="script/script.js"></script>
 </body>
 
 </html>
