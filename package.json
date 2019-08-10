@@ -1,12 +1,12 @@
 {
-  "name": "regal_gaming",
+  "name": "spending_tracker",
   "version": "1.0.0",
-  "description": "Website for Regal Gaming",
+  "description": "Website for spending tracker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mursil Khan",
+  "author": "Shubham Deshmukh",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -16,6 +16,7 @@
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.7",
     "morgan": "^1.9.1",
+    "nodemon": "^1.19.1",
     "sugar": "^2.0.6"
   }
 }
