@@ -1,8 +1,9 @@
-table 
+table
 {
     text-align: center; 
-    vertical-align: middle;
+    vertical-align: middle; 
 }
+
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;
