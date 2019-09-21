@@ -160,9 +160,9 @@ router.get('/search_item', (req, res, next) => {
         });
 });
 
-router.get('/test', (req, res, next) => {
-    res.status(200).render('monthlyGraph');
-});
+// router.get('/test', (req, res, next) => {
+//     res.status(200).render('monthlyGraph');
+// });
 
 module.exports = router;
 
