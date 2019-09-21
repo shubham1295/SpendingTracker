@@ -30,7 +30,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    var bodyDate = GetFormattedDate(req.body.date); //Remove this to work on postman
+    var bodyDate = GetFormattedDate(req.body.date);
 
     const spend = new Spending({
         _id: new mongoose.Types.ObjectId(),
@@ -39,20 +39,17 @@ router.post("/", (req, res, next) => {
         cost: req.body.cost
     });
 
-    spend.date.setDate(spend.date.getDate());
-
     spend.save().then(result => {
         // res.status(200).json({
         //     message: 'Index page POST request',
         //     spend: result
         // });
-        console.log(result);
-        //res.redirect('/');          //temp fix
+        // res.send(result);
+        // console.log(result);
 
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ result }, null, 3));
 
-        // res.send(result);
     })
         .catch(err => {
             console.log(err);
@@ -163,6 +160,10 @@ router.get('/search_item', (req, res, next) => {
         });
 });
 
+router.get('/test', (req, res, next) => {
+    res.status(200).render('monthlyGraph');
+});
+
 module.exports = router;
 
 function GetFormattedDate(date) {
@@ -172,7 +173,7 @@ function GetFormattedDate(date) {
     var month = fields[1];
     var year = fields[2];
 
-    date = year + -+month + -+day;
+    date = year + '-' + month + '-' + day;
     return date;
 }
 
@@ -195,7 +196,7 @@ function GetQuery(Spending, callback) {
             result = [{ _id: null, total: 0 }];
         }
 
-        // console.log(Sugar.Date.format(new Date(), '%Y-%m-%d'));
+        // console.log("test",Sugar.Date.format(new Date(), '%Y-%m-%d'));
         Spending.aggregate([
             { $match: { date: { $gte: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
             {
