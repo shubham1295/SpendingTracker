@@ -9,7 +9,7 @@ var index = require('./routes/index');
 
 const dbLink = process.env.DATABASE_URL;
 // Mlab connectivity
-mongoose.connect(dbLink, { useNewUrlParser: true}, function(err){
+mongoose.connect(dbLink, { useUnifiedTopology: true, useNewUrlParser: true}, function(err){
     if(err) {
         console.log('Some problem with the connection ' +err);
     } else {

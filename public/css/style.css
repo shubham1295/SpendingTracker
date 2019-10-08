@@ -3,6 +3,11 @@ table
     text-align: center; 
     vertical-align: middle; 
 }
+li{
+  cursor: pointer;
+}
+
+/* ----------------- Auto Complete Do no do Chedkhani to this ------------------- */
 
 .autocomplete {
   /*the container must be positioned relative:*/
