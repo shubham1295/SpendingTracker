@@ -55,6 +55,23 @@ $(".myForm").submit(function (e) {
   });
 });
 
+function onCategoryselect(category) {
+  var sendUrl = "/search_item/"+category;
+  $.ajax({
+    type: "GET",
+    url: sendUrl,   //'/search_item',
+    dataType: "json",
+    success: function (data) {
+      // console.log(data.message);
+      var items = data.message;
+  
+      autocomplete(document.getElementById("item"), items);
+    }
+  });
+
+}
+
+// -----------------  Auto Complete Do no do Chedkhani to this  -------------------------
 
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -152,52 +169,3 @@ function autocomplete(inp, arr) {
     closeAllLists(e.target);
   });
 }
-
-$.ajax({
-  type: "GET",
-  url: '/search_item',
-  dataType: "json",
-  success: function (data) {
-    // console.log(data.message);
-    var items = data.message;
-
-    autocomplete(document.getElementById("item"), items);
-  }
-});
-
-// -----------------  TEST  -------------------------
-
-// $(document).ready(function(){
-//   $('#demo-show-toast').on('click', function () {
-//     $.ajax({
-//       url: '/',
-//       type: 'POST',
-//       contentType: 'application/json',
-//       data: $("myForm").serialize(),
-//       success: function (response) {
-
-//         console.log(response);
-
-//         // var tbodyEl = $('tbody');
-//         // tbodyEl.html('');
-//         // response.result.forEach(function (result) {
-//         //   //   tbodyEl.append('\
-//         //   //   <tr>\
-//         //   //     <td class="item">' + result.item + ' </td>\
-//         //   //     <td class="item">' + result.cost + ' </td>\
-//         //   //     <td class="item">' + result.date + ' </td>\
-//         //   //   </tr>\
-//         //   // ');
-//         //   alert(resut);
-//         //});
-//       }
-//     });
-//   });
-// })
-
-// $('demo-show-toast').click(function(){
-//   $.post(window.location, $('.myform').serialize(),
-//   function(data, status){
-//     alert('Data: '+data+"\n status"+status);
-//   });
-// });

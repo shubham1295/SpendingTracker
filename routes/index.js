@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Sugar = require('sugar');
 const Spending = require('../models/spending');
+const Category = require('../models/category');
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -22,8 +23,19 @@ router.get("/", (req, res, next) => {
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
 
-        res.status(200).render('index', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear() });
-
+        Category.find({}, { _id: 0, description: 0 })
+            .then(out => {
+                // console.log(out);
+                res.status(200).render('index', {
+                    total: totalExp,
+                    item: test,
+                    month: monthNames[currMonth],
+                    year: currentDate.getFullYear(),
+                    category: out
+                });
+            }).catch(err => {
+                console.log(err);
+            });
 
     });
 
@@ -31,12 +43,12 @@ router.get("/", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     var bodyDate = GetFormattedDate(req.body.date);
-
     const spend = new Spending({
         _id: new mongoose.Types.ObjectId(),
         item: req.body.item,
         date: bodyDate,
-        cost: req.body.cost
+        cost: req.body.cost,
+        category: req.body.category
     });
 
     spend.save().then(result => {
@@ -148,7 +160,9 @@ router.get("/price", (req, res, next) => {
     });
 });
 
-router.get('/search_item', (req, res, next) => {
+router.get('/search_item/:category', (req, res, next) => {
+
+    // Spending.distinct("item", { category: req.params.category })             //Temp till i collect data
     Spending.distinct('item')
         .then(result => {
             res.status(200).json({
