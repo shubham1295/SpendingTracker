@@ -212,7 +212,7 @@ function GetQuery(Spending, callback) {
 
         // console.log("test",Sugar.Date.format(new Date(), '%Y-%m-%d'));
         Spending.aggregate([
-            { $match: { date: { $gte: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
+            { $match: { date: { $eq: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
             {
                 $group: {
                     _id: "$_id",

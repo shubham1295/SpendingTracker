@@ -38,7 +38,7 @@ $(".myForm").submit(function (e) {
 
           $('.myForm')[0].reset();
           $(".table tbody").text("");
-          console.log(data.test);
+          // console.log(data.test);
           Object.keys(data.test).forEach((key) => {
             // console.log(data.test[key]._id);
             $(".table").append('<tr><td>' + data.test[key].item + '</td><td>' + data.test[key].cost + '</td><td>' + data.test[key].date + '</td></tr>');
