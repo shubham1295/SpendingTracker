@@ -2,164 +2,195 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Spending Tracker</title>
+    <title>Spending Tracker</title>
 
-  <!-- material ui getmdl -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <!-- material ui getmdl -->
+    <!-- material ui getmdl -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- material ui getmdl -->
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
-  <!--  jQuery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+    <!--  jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
-  <!-- For Date -->
-  <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-  <!-- For Date -->
+    <!-- For Date -->
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+    <!-- For Date -->
 
 </head>
 
 <body>
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--3-col"></div>
 
-    <div class="mdl-cell mdl-cell--6-col">
-      <% if ("development" === process.env.NODE_ENV) { %>
-        <h5 style="color: red">Test page</h5>
-      <% } %>
-
-      <!-- ADD FORM -->
-      <h1 style="display: inline">&#8377</h1>
-      <h1 id="total-amount" style="display: inline"><%= total %></h1>
-      <h6> <%= month %> <%= year %></h6>
-      <hr>
-      <form class="myForm" action="/">
-
-        <% if(category.length > 0 && null != category.length){ %>
-          <div class="form-group">
-            <label for="sel1">Category</label>
-            <select class="form-control" id="category" name="category" onchange="onCategoryselect(value);" required >
-              <option selected disabled value="">Choose one...</option>
-              <% for (var i = 0; i< category.length; i++) { %>
-              <option name="<%=category[i].category %>" id="<%=category[i].category %>"><%=category[i].category %>
-              </option>
-              <% } %>
-            </select>
-          </div>
-        <% } %>
-
-        <div class="autocomplete form-group">
-          <label for="example-text-input">Item</label>
-          <input class="form-control" type="text" id="item" name="item" required>
+    <div class="mdl-grid">
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <br><br>
+            <a href="/" class="disable-me">Home</a>
+            <br>
+            <a href="/date">Search By Date</a>
+            <br>
+            <a href="/setting">Setting</a>
+        </div>
+        <div class="col-xs-1">
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">☰</span>
         </div>
 
-        <div class="form-group">
-          <label for="example-text-input">Price</label>
-          <input class="form-control" type="Number" id="cost" name="cost" min="1" required>
-        </div>
+        <!-- added to keep everything in center -->
+        <div class="mdl-cell mdl-cell--3-col"></div>
 
-        <div class="form-group">
-          <label for="example-text-input">Date</label>
-          <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" required />
+        <div class="mdl-cell mdl-cell--6-col">
+            <% if ("development" === process.env.NODE_ENV) { %>
+            <h5 style="color: red">Development Mode</h5>
+            <% } %>
 
-        </div>
-        <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect btn btn-primary"
-          id="demo-show-toast">Submit</button>
-      </form>
+            <!-- ADD FORM -->
+            <h1 style="display: inline">&#8377</h1>
+            <h1 id="total-amount" style="display: inline">
+                <%= total %>
+            </h1>
+            <h6>
+                <%= month %>
+                <%= year %>
+            </h6>
+            <hr>
+            <form class="myForm" action="/">
 
-      <% if ("active" === process.env.UI_SEARCH_DATE) { %>
-      <br><br>
-      <div id="accordion">
-        <div class="card">
-          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-            aria-controls="collapseOne" style="background-color: whitesmoke">
-            <div class="card-header" id="headingOne"
-              style="text-align: left; text-decoration: none; background-color: whitesmoke">
-              <!-- <h5 class="mb-0"> -->
-              <!-- <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
-              <b>Search By Date</b>
-              <!-- </button> -->
-              <!-- </h5> -->
-            </div>
-          </button>
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-
-              <form method="get" action="/date">
+                <% if(category.length > 0 && null != category.length){ %>
                 <div class="form-group">
-                  <label for="example-text-input">Start Date</label>
-                  <input class="form-control" id="date" name="sdate" placeholder="DD/MM/YYYY" type="text" required />
+                    <label for="sel1">Category</label>
+                    <select class="form-control" id="category" name="category" onchange="onCategoryselect(value);"
+                        required>
+                        <option selected disabled value="">Choose one...</option>
+                        <% for (var i = 0; i< category.length; i++) { %>
+                        <option name="<%=category[i].category %>" id="<%=category[i].category %>">
+                            <%=category[i].category %>
+                        </option>
+                        <% } %>
+                    </select>
                 </div>
+                <% } %>
+
+                <div class="autocomplete form-group">
+                    <label for="example-text-input">Item</label>
+                    <input class="form-control" type="text" id="item" name="item" required>
+                </div>
+
                 <div class="form-group">
-                  <label for="example-text-input">End Date</label>
-                  <input class="form-control" id="date" name="edate" placeholder="DD/MM/YYYY" type="text" />
+                    <label for="example-text-input">Price</label>
+                    <input class="form-control" type="Number" id="cost" name="cost" min="1" required>
                 </div>
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="show-data">Show</button>
-              </form>
+
+                <div class="form-group">
+                    <label for="example-text-input">Date</label>
+                    <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" required />
+
+                </div>
+                <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect btn btn-primary"
+                    id="demo-show-toast">Submit</button>
+            </form>
+
+            <% if ("active" === process.env.UI_SEARCH_DATE) { %>
+            <br><br>
+            <div id="accordion">
+                <div class="card">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne" style="background-color: whitesmoke">
+                        <div class="card-header" id="headingOne"
+                            style="text-align: left; text-decoration: none; background-color: whitesmoke">
+                            <!-- <h5 class="mb-0"> -->
+                            <!-- <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
+                            <b>Search By Date</b>
+                            <!-- </button> -->
+                            <!-- </h5> -->
+                        </div>
+                    </button>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+
+                            <form method="get" action="/date">
+                                <div class="form-group">
+                                    <label for="example-text-input">Start Date</label>
+                                    <input class="form-control" id="date" name="sdate" placeholder="DD/MM/YYYY"
+                                        type="text" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-text-input">End Date</label>
+                                    <input class="form-control" id="date" name="edate" placeholder="DD/MM/YYYY"
+                                        type="text" />
+                                </div>
+                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                                    id="show-data">Show</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+            <% } %>
 
-          </div>
+            <div class="mdl-cell mdl-cell--3-col"></div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Cost</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i = 0; i< item.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= item[i].item %>
+                        </td>
+                        <td>
+                            <%= item[i].cost %>
+                        </td>
+                        <td>
+                            <%= item[i].date %>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+
         </div>
-      </div>
-      <% } %>
-
-      <div class="mdl-cell mdl-cell--3-col"></div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Cost</th>
-            <th scope="col">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (var i = 0; i< item.length; i++) { %>
-          <tr>
-            <td><%= item[i].item %></td>
-            <td><%= item[i].cost %></td>
-            <td><%= item[i].date %></td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
 
     </div>
 
-  </div>
+    <!-- toast -->
+    <div id="demo-toast-example" aria-live="assertive" aria-atomic="true" aria-relevant="text"
+        class="mdl-snackbar mdl-js-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
 
-  <!-- toast -->
-  <div id="demo-toast-example" aria-live="assertive" aria-atomic="true" aria-relevant="text"
-    class="mdl-snackbar mdl-js-snackbar">
-    <div class="mdl-snackbar__text"></div>
-    <button class="mdl-snackbar__action" type="button"></button>
-  </div>
-
-  <script defer src="script/script.js"></script>
+    <script defer src="script/script.js"></script>
 </body>
 
 </html>
