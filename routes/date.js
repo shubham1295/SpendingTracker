@@ -1,0 +1,148 @@
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Sugar = require('sugar');
+const Spending = require('../models/spending');
+const Category = require('../models/category');
+
+// router.get("/", (req, res, next) => {
+
+//     res.status(200).render('date', {item: ""});
+
+// });
+
+
+//sample URL    http://localhost:3000/date?sdate=2019-06-02&edate=2019-06-30
+router.get("/", (req, res, next) => {
+    var sdate = GetFormattedDate(req.query.sdate);
+    var edate = GetFormattedDate(req.query.edate);
+    // res.status(200).json({
+    //     message:  req.query.sdate
+    // });
+
+    // Spending.find({
+    //     date: { $gte: req.query.sdate, $lte: new Date() }
+    // })
+    // .then(result => {
+    //     res.status(200).json({
+    //         message: result
+    //     });
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
+    if (sdate == "" && edate == "") {
+        res.status(200).render('date', { item: "" });
+    } else {
+        console.log(sdate, ":", edate)
+        if (req.query.edate != "") {
+            
+            // Spending.find({
+            //     date: { $gte: sdate, $lte: edate }
+            // })
+            //     .then(result => {
+            //         // res.status(200).json({
+            //         //     message: result
+            //         // });
+            //         // date = GetFormattedDate(result.date);
+            //         res.status(200).render('date', { item: result });
+            //     })
+            //     .catch(err => {
+            //         console.log(err);
+            //     });
+
+            Spending.aggregate([
+                { $match: {date: { $gte: new Date(sdate) , $lte: new Date(edate)}} },
+                {
+                    $group: {
+                        _id: "$_id",
+                        item: { $first: '$item' },
+                        cost: { $first: '$cost' },
+                        date: { $first: '$date' },
+                    }
+                },
+                { $project: {
+                        item: true,
+                        cost: true,
+                        date: { $dateToString: { format: "%d/%m/%G",date: "$date" } }
+                    }
+                },
+                { $sort: { date: -1 } }
+            ]).then(result => {
+                // res.status(200).json({
+                //     message: result
+                // });
+                // date = GetFormattedDate(result.date);
+                res.status(200).render('date', { item: result });
+                // console.log("HEREE",result);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        } else {
+            // Spending.find({
+            //     date: { $gte: sdate, $lte: new Date() },
+            // })
+            //     .then(result => {
+            //         // res.status(200).json({
+            //         //     message: result
+            //         // });
+            //         // res.send({result: result})
+            //         res.status(200).render('date', { item: result });
+
+            //     })
+            //     .catch(err => {
+            //         console.log(err);
+            //     });
+
+            // var dat = new Date(sdate);
+
+            Spending.aggregate([
+                { $match: {date: { $gte: new Date(sdate) }} },
+                // { $match: { date: { $eq: new Date(Sugar.Date.format(dat, '%Y-%m-%d')) } } },
+                {
+                    $group: {
+                        _id: "$_id",
+                        item: { $first: '$item' },
+                        cost: { $first: '$cost' },
+                        date: { $first: '$date' },
+                    }
+                },
+                { $project: {
+                        item: true,
+                        cost: true,
+                        date: { $dateToString: { format: "%d/%m/%G",date: "$date" } }
+                    }
+                },
+                { $sort: { date: -1 } }
+            ]).then(result => {
+                // res.status(200).json({
+                //     message: result
+                // });
+                // date = GetFormattedDate(result.date);
+                res.status(200).render('date', { item: result });
+                // console.log("HEREE",result);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        }
+    }
+});
+
+function GetFormattedDate(date) {
+    if (date != null) {
+        var fields = date.split('/');
+
+        var day = fields[0];
+        var month = fields[1];
+        var year = fields[2];
+
+        date = year + '-' + month + '-' + day;
+        return date;
+    }
+    return "";
+}
+
+module.exports = router;
