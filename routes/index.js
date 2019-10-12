@@ -68,92 +68,12 @@ router.post("/", (req, res, next) => {
         });
 
 
-    // res.status(200).json({
-    //     message: 'Index page POST request',
-    //     spend: spend
-    // });
-
 });
-
-
-//sample URL    http://localhost:3000/date?sdate=2019-06-02&edate=2019-06-30
-// router.get("/date", (req, res, next) => {
-
-//     // res.status(200).json({
-//     //     message:  req.query.sdate
-//     // });
-
-//     // Spending.find({
-//     //     date: { $gte: req.query.sdate, $lte: new Date() }
-//     // })
-//     // .then(result => {
-//     //     res.status(200).json({
-//     //         message: result
-//     //     });
-//     // })
-//     // .catch(err => {
-//     //     console.log(err);
-//     // });
-
-//     sdate = GetFormattedDate(req.query.sdate);
-//     edate = GetFormattedDate(req.query.edate);
-//     console.log(sdate, ":", edate)
-//     if(req.query.edate != ""){
-//         Spending.find({
-//             date: { $gte: sdate, $lte: edate }
-//         })
-//         .then(result => {
-//             // res.status(200).json({
-//             //     message: result
-//             // });
-//             // date = GetFormattedDate(result.date);
-//             res.status(200).render('date', { result: result });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         });
-
-
-//         // Spending.aggregate([
-//         //     { $project: {
-//         //             item: true,
-//         //             cost: true,
-//         //             date: { $dateToString: { format: "%d/%m/%G",date: "$date" } }
-//         //         }
-//         //     },
-//         //     { $match: {date: { $gte: sdate }} }
-//         // ]).then(result => {
-//         //     // res.status(200).json({
-//         //     //     message: result
-//         //     // });
-//         //     // date = GetFormattedDate(result.date);
-//         //     res.status(200).render('date', { result: result });
-//         // })
-//         // .catch(err => {
-//         //     console.log(err);
-//         // });
-//     }else{
-//         Spending.find({
-//             date: { $gte: sdate, $lte: new Date() }
-//         })
-//         .then(result => {
-//             // res.status(200).json({
-//             //     message: result
-//             // });
-//             // res.send({result: result})
-//             res.status(200).render('date', { result: result });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         });
-//     }
-// });
 
 router.get("/price", (req, res, next) => {
     GetQuery(Spending, function(result, test) {
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
-        // res.status(200).render('test', { total: totalExp, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ totalExp, test }, null, 3));
         console.log(totalExp, test);
@@ -210,7 +130,6 @@ function GetQuery(Spending, callback) {
                 result = [{ _id: null, total: 0 }];
             }
 
-            // console.log("test",Sugar.Date.format(new Date(), '%Y-%m-%d'));
             Spending.aggregate([
                 { $match: { date: { $eq: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
                 {
@@ -230,14 +149,6 @@ function GetQuery(Spending, callback) {
                     }
                 }
             ]).then(test => {
-                // console.log(test,result);
-                // res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-                // if("development" === process.env.NODE_ENV){
-                //     res.status(200).render('test', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-                // }
-                // else {
-                //     res.status(200).render('index', { total: result, item: test, month: monthNames[currMonth], year: currentDate.getFullYear()});
-                // }
                 callback(result, test);
             }).catch(err => {
                 console.log(err);

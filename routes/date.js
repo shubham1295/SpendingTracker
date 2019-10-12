@@ -16,41 +16,13 @@ const Category = require('../models/category');
 router.get("/", (req, res, next) => {
     var sdate = GetFormattedDate(req.query.sdate);
     var edate = GetFormattedDate(req.query.edate);
-    // res.status(200).json({
-    //     message:  req.query.sdate
-    // });
 
-    // Spending.find({
-    //     date: { $gte: req.query.sdate, $lte: new Date() }
-    // })
-    // .then(result => {
-    //     res.status(200).json({
-    //         message: result
-    //     });
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
     if (sdate == "" && edate == "") {
         res.status(200).render('date', { item: "" });
     } else {
         console.log(sdate, ":", edate)
         if (req.query.edate != "") {
             
-            // Spending.find({
-            //     date: { $gte: sdate, $lte: edate }
-            // })
-            //     .then(result => {
-            //         // res.status(200).json({
-            //         //     message: result
-            //         // });
-            //         // date = GetFormattedDate(result.date);
-            //         res.status(200).render('date', { item: result });
-            //     })
-            //     .catch(err => {
-            //         console.log(err);
-            //     });
-
             Spending.aggregate([
                 { $match: {date: { $gte: new Date(sdate) , $lte: new Date(edate)}} },
                 {
@@ -72,7 +44,6 @@ router.get("/", (req, res, next) => {
                 // res.status(200).json({
                 //     message: result
                 // });
-                // date = GetFormattedDate(result.date);
                 res.status(200).render('date', { item: result });
                 // console.log("HEREE",result);
             })
@@ -81,26 +52,9 @@ router.get("/", (req, res, next) => {
             });
 
         } else {
-            // Spending.find({
-            //     date: { $gte: sdate, $lte: new Date() },
-            // })
-            //     .then(result => {
-            //         // res.status(200).json({
-            //         //     message: result
-            //         // });
-            //         // res.send({result: result})
-            //         res.status(200).render('date', { item: result });
-
-            //     })
-            //     .catch(err => {
-            //         console.log(err);
-            //     });
-
-            // var dat = new Date(sdate);
 
             Spending.aggregate([
                 { $match: {date: { $gte: new Date(sdate) }} },
-                // { $match: { date: { $eq: new Date(Sugar.Date.format(dat, '%Y-%m-%d')) } } },
                 {
                     $group: {
                         _id: "$_id",
