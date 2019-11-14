@@ -4,4 +4,4 @@
 _"If you can't measure it, you can't improve it."_ - [Peter Drucker](https://en.wikipedia.org/wiki/Peter_Drucker)  
 
 ## Check it out
-https://staging-spendingtracker.herokuapp.com/ :rocket:
+https://test-spendingtracker.herokuapp.com/ :rocket:
