@@ -65,7 +65,11 @@
                         <h5 class="card-title">Month</h5>
                         <p class="card-text">Month vise total expense</p>
                     </div>
+                    <% if ("development" != process.env.NODE_ENV) { %>
                     <iframe style="border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-project-0-zukok/embed/charts?id=6f3b4530-4f9f-4317-9f27-e1366f169555&tenant=196576c4-f2da-4760-8a79-fc2223fc64d4"></iframe>
+                    <% } else {%>
+                        <h5 style="color: red">Cant see this coz Development mod</h5>
+                    <% } %>
                 </div>
 
                 <div class="mdl-cell mdl-cell--3-col"></div>    
@@ -77,10 +81,12 @@
                         <h5 class="card-title">Catogery</h5>
                         <p class="card-text">Catogery vise total expense</p>
                     </div>
+                    <% if ("development" != process.env.NODE_ENV) { %>
                     <iframe style="border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-project-0-zukok/embed/charts?id=28a21ed0-fbd1-4357-b54c-35bb39735871&tenant=196576c4-f2da-4760-8a79-fc2223fc64d4"></iframe>
+                    <% } else {%>
+                        <h5 style="color: red">Cant see this coz Development mod</h5>
+                    <% } %>
                 </div>
-    
-                <!-- <div class="mdl-spinner mdl-js-spinner is-active"></div> -->
             </div>
     
         </div>
