@@ -121,6 +121,7 @@ input[type=submit] {
     }
 }
 
-.disable-me {
+#disable-me {
+    color: rgba(255, 99, 71, 0.795);
     pointer-events: none;
 }

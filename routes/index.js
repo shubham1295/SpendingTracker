@@ -94,9 +94,9 @@ router.get('/search_item/:category', (req, res, next) => {
         });
 });
 
-// router.get('/test', (req, res, next) => {
-//     res.status(200).render('monthlyGraph');
-// });
+router.get('/graph', (req, res, next) => {
+    res.status(200).render('monthlyGraph');
+});
 
 module.exports = router;
 
