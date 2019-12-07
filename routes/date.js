@@ -17,68 +17,36 @@ router.get("/", (req, res, next) => {
     if (sdate == "" && edate == "") {
         res.status(200).render('date', { item: "" });
     } else {
-        console.log(sdate, ":", edate)
-        if (req.query.edate != "") {
-            
-            Spending.aggregate([
-                { $match: {date: { $gte: new Date(sdate) , $lte: new Date(edate)}} },
-                {
-                    $group: {
-                        _id: "$_id",
-                        item: { $first: '$item' },
-                        cost: { $first: '$cost' },
-                        date: { $first: '$date' },
-                    }
-                },
-                { $project: {
-                        item: true,
-                        cost: true,
-                        date: { $dateToString: { format: "%d/%m/%G",date: "$date" } }
-                    }
-                },
-                { $sort: { date: -1 } }
-            ]).then(result => {
-                // res.status(200).json({
-                //     message: result
-                // });
-                res.status(200).render('date', { item: result });
-                // console.log("HEREE",result);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        console.log(sdate, ":", edate);
 
-        } else {
+        var date = (req.query.edate == "") ? new Date() : new Date(edate);
 
-            Spending.aggregate([
-                { $match: {date: { $gte: new Date(sdate) }} },
-                {
-                    $group: {
-                        _id: "$_id",
-                        item: { $first: '$item' },
-                        cost: { $first: '$cost' },
-                        date: { $first: '$date' },
-                    }
-                },
-                { $project: {
-                        item: true,
-                        cost: true,
-                        date: { $dateToString: { format: "%d/%m/%G",date: "$date" } }
-                    }
-                },
-                { $sort: { date: -1 } }
-            ]).then(result => {
-                // res.status(200).json({
-                //     message: result
-                // });
-                // date = GetFormattedDate(result.date);
-                res.status(200).render('date', { item: result });
-                // console.log("HEREE",result);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        }
+        Spending.aggregate([
+            { $match: { date: { $gte: new Date(sdate), $lte: date } } },
+            {
+                $group: {
+                    _id: "$_id",
+                    item: { $first: '$item' },
+                    cost: { $first: '$cost' },
+                    date: { $first: '$date' },
+                }
+            },
+            {
+                $project: {
+                    item: true,
+                    cost: true,
+                    date: { $dateToString: { format: "%d/%m/%G", date: "$date" } }
+                }
+            },
+            { $sort: { date: -1 } }
+        ]).then(result => {
+            // res.status(200).json({
+            //     message: result
+            // });
+            res.status(200).render('date', { item: result });
+        }).catch(err => {
+            console.log(err);
+        });
     }
 });
 
