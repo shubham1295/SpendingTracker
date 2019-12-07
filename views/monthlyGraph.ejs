@@ -2,57 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-    <title>Spending Tracker</title>
-
-    <!-- fevicon -->
-    <link href="/favicon.ico" rel="icon" type="image/x-icon" />
-    <!-- fevicon -->
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <!--  jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-    <!-- For Date -->
-    <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-    <!-- For Date -->
+    <%- include('partials/head') %>
 </head>
 
 <body>
 
     <div class="mdl-grid">
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <br><br>
-            <a href="/">Home</a>
-            <br>
-            <a href="/date">Search By Date</a>
-            <br>
-            <a href="/graph" id="disable-me">Graphs</a>
-            <br>
-            <a href="/setting">Setting</a>
-        </div>
-        <div class="col-xs-1">
-            <span style="font-size:30px;cursor:pointer" onclick="openNav()">☰</span>
-        </div>
+        
+        <%- include('partials/navbar') %>
 
         <!-- added to keep everything in center -->
         <div class="mdl-cell mdl-cell--3-col"></div>
