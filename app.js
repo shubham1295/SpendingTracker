@@ -2,22 +2,14 @@ var express = require("express");
 var app = express();
 var morgan = require('morgan');
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
 require('custom-env').env()
+//MongoDb Connection
+require('./models/db.js');
 
 var index = require('./routes/index');
 var date = require('./routes/date');
 var setting = require('./routes/setting');
 
-const dbLink = process.env.DATABASE_URL;
-// Mlab connectivity
-mongoose.connect(dbLink, { useUnifiedTopology: true, useNewUrlParser: true }, function (err) {
-    if (err) {
-        console.log('Some problem with the connection ' + err);
-    } else {
-        console.log('The Mongoose connection is ready');
-    }
-});
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
