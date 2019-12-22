@@ -13,7 +13,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 router.get("/", (req, res, next) => {
 
     var currentDate = new Date();
-    var currMonth = currentDate.getMonth() + 1;
+    var currMonth = currentDate.getMonth();
 
     // res.status(200).json({
     //     message: month,
