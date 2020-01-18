@@ -19,23 +19,27 @@ router.get("/", (req, res, next) => {
     //     message: month,
     // });
 
-    GetQuery(Spending, function(result, test) {
+    GetQuery(Spending, function (result, test) {
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
 
-        Category.find({}, { _id: 0, description: 0 })
-            .then(out => {
-                // console.log(out);
-                res.status(200).render('index', {
-                    total: totalExp,
-                    item: test,
-                    month: monthNames[currMonth],
-                    year: currentDate.getFullYear(),
-                    category: out
+        try {
+            Category.find({}, { _id: 0, description: 0 })
+                .then(out => {
+                    // console.log(out);
+                    res.status(200).render('index', {
+                        total: totalExp,
+                        item: test,
+                        month: monthNames[currMonth],
+                        year: currentDate.getFullYear(),
+                        category: out
+                    });
+                }).catch(err => {
+                    throw new Error(err);
                 });
-            }).catch(err => {
-                console.log(err);
-            });
+        } catch (error) {
+            console.log(error);
+        }
 
     });
 
@@ -52,17 +56,17 @@ router.post("/", (req, res, next) => {
     });
 
     spend.save().then(result => {
-            // res.status(200).json({
-            //     message: 'Index page POST request',
-            //     spend: result
-            // });
-            // res.send(result);
-            // console.log(result);
+        // res.status(200).json({
+        //     message: 'Index page POST request',
+        //     spend: result
+        // });
+        // res.send(result);
+        // console.log(result);
 
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ result }, null, 3));
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ result }, null, 3));
 
-        })
+    })
         .catch(err => {
             console.log(err);
         });
@@ -71,7 +75,7 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/price", (req, res, next) => {
-    GetQuery(Spending, function(result, test) {
+    GetQuery(Spending, function (result, test) {
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
         res.setHeader('Content-Type', 'application/json');
@@ -82,8 +86,7 @@ router.get("/price", (req, res, next) => {
 
 router.get('/search_item/:category', (req, res, next) => {
 
-    // Spending.distinct("item", { category: req.params.category })             //Temp till i collect data
-    Spending.distinct('item')
+    Spending.distinct("item", { category: req.params.category })
         .then(result => {
             res.status(200).json({
                 message: result
@@ -116,47 +119,47 @@ function GetQuery(Spending, callback) {
     var currMonth = currentDate.getMonth() + 1;
 
     Spending.aggregate([
-            { $project: { month: { $month: '$date' }, cost: true } },
-            { $match: { month: currMonth } },
+        { $project: { month: { $month: '$date' }, cost: true } },
+        { $match: { month: currMonth } },
+        {
+            $group: {
+                _id: null,
+                total: { $sum: '$cost' }
+            }
+        }
+    ]).exec().then(result => {
+        if (result.length == 0) {
+            //If result is null set total amount to 0
+            result = [{ _id: null, total: 0 }];
+        }
+
+        Spending.aggregate([
+            { $match: { date: { $eq: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
             {
                 $group: {
-                    _id: null,
-                    total: { $sum: '$cost' }
+                    _id: "$_id",
+                    item: { $first: '$item' },
+                    cost: { $first: '$cost' },
+                    date: { $first: '$date' },
+                }
+            },
+            {
+                $project: {
+                    _id: true,
+                    item: true,
+                    cost: true,
+                    date: { $dateToString: { format: "%d/%m/%G", date: "$date" } }
                 }
             }
-        ]).exec().then(result => {
-            if (result.length == 0) {
-                //If result is null set total amount to 0
-                result = [{ _id: null, total: 0 }];
-            }
+        ]).then(test => {
+            callback(result, test);
+        }).catch(err => {
+            console.log(err);
+            // res.status(500).json(err);
+            callback(err);
+        });
 
-            Spending.aggregate([
-                { $match: { date: { $eq: new Date(Sugar.Date.format(new Date(), '%Y-%m-%d')) } } },
-                {
-                    $group: {
-                        _id: "$_id",
-                        item: { $first: '$item' },
-                        cost: { $first: '$cost' },
-                        date: { $first: '$date' },
-                    }
-                },
-                {
-                    $project: {
-                        _id: true,
-                        item: true,
-                        cost: true,
-                        date: { $dateToString: { format: "%d/%m/%G", date: "$date" } }
-                    }
-                }
-            ]).then(test => {
-                callback(result, test);
-            }).catch(err => {
-                console.log(err);
-                // res.status(500).json(err);
-                callback(err);
-            });
-
-        })
+    })
         .catch(err => {
             console.log(err);
             res.status(500).json(err);

@@ -61,8 +61,12 @@
                     <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" required />
 
                 </div>
-                <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect btn btn-primary"
-                    id="demo-show-toast">Submit</button>
+
+                <button type="submit"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                    id="submit-btn">Submit</button>
+                <div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>
+
             </form>
 
             <% if ("active" === process.env.UI_SEARCH_DATE) { %>

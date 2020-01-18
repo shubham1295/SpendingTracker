@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var date_input = $('input[id="date"]'); //our date input has the name "date"
     var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
     var options = {
@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 });
 
-$(".myForm").submit(function(e) {
+$(".myForm").submit(function (e) {
 
     e.preventDefault();
 
@@ -24,13 +24,14 @@ $(".myForm").submit(function(e) {
         type: "POST",
         url: url,
         data: form.serialize(),
-        success: function(data) {
-           
+        success: function (data) {
+            $("#submit-btn").css("display", "none");
+            $("#spinner").css("display", "block");
             $.ajax({
                 type: "GET",
                 url: '/price',
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     // console.log(data.totalExp);
                     $("#total-amount").text(data.totalExp);
 
@@ -46,6 +47,8 @@ $(".myForm").submit(function(e) {
                     var snackbarContainer = document.querySelector('#demo-toast-example');
                     var data = { message: 'Data Saved' };
                     snackbarContainer.MaterialSnackbar.showSnackbar(data);
+                    $("#submit-btn").css("display", "block");
+                    $("#spinner").css("display", "none");
                 }
             });
 
@@ -59,7 +62,7 @@ function onCategoryselect(category) {
         type: "GET",
         url: sendUrl, //'/search_item',
         dataType: "json",
-        success: function(data) {
+        success: function (data) {
             // console.log(data.message);
             var items = data.message;
 
@@ -76,7 +79,7 @@ function autocomplete(inp, arr) {
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function(e) {
+    inp.addEventListener("input", function (e) {
         var a, b, i, val = this.value;
         /*close any already open lists of autocompleted values*/
         closeAllLists();
@@ -100,7 +103,7 @@ function autocomplete(inp, arr) {
                 /*insert a input field that will hold the current array item's value:*/
                 b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
                 /*execute a function when someone clicks on the item value (DIV element):*/
-                b.addEventListener("click", function(e) {
+                b.addEventListener("click", function (e) {
                     /*insert the value for the autocomplete text field:*/
                     inp.value = this.getElementsByTagName("input")[0].value;
                     /*close the list of autocompleted values,
@@ -112,7 +115,7 @@ function autocomplete(inp, arr) {
         }
     });
     /*execute a function presses a key on the keyboard:*/
-    inp.addEventListener("keydown", function(e) {
+    inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
@@ -166,7 +169,7 @@ function autocomplete(inp, arr) {
         }
     }
     /*execute a function when someone clicks in the document:*/
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function (e) {
         closeAllLists(e.target);
     });
 }

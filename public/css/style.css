@@ -7,6 +7,14 @@ li {
     cursor: pointer;
 }
 
+#submit-btn{
+    display: block;
+}
+
+#spinner{
+    display: none;
+}
+
 
 /* ----------------- Auto Complete Do no do Chedkhani to this ------------------- */
 
