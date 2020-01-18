@@ -22,7 +22,7 @@ router.get("/", (req, res, next) => {
     GetQuery(Spending, function (result, test) {
         // console.log(result,test);
         var totalExp = formatMoney(result[0].total);
-        
+
         try {
             Category.find({}, { _id: 0, description: 0 })
                 .then(out => {
@@ -40,7 +40,6 @@ router.get("/", (req, res, next) => {
         } catch (error) {
             console.log(error);
         }
-
 
     });
 
@@ -87,8 +86,7 @@ router.get("/price", (req, res, next) => {
 
 router.get('/search_item/:category', (req, res, next) => {
 
-    // Spending.distinct("item", { category: req.params.category })             //Temp till i collect data
-    Spending.distinct('item')
+    Spending.distinct("item", { category: req.params.category })
         .then(result => {
             res.status(200).json({
                 message: result
