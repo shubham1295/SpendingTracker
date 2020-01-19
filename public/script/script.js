@@ -14,7 +14,8 @@ $(document).ready(function () {
 });
 
 $(".myForm").submit(function (e) {
-
+    $("#submit-btn").css("display", "none");
+    $("#spinner").css("display", "block");
     e.preventDefault();
 
     var form = $(this);
@@ -25,8 +26,7 @@ $(".myForm").submit(function (e) {
         url: url,
         data: form.serialize(),
         success: function (data) {
-            $("#submit-btn").css("display", "none");
-            $("#spinner").css("display", "block");
+            
             $.ajax({
                 type: "GET",
                 url: '/price',
