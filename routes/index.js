@@ -166,6 +166,47 @@ function GetQuery(Spending, callback) {
         });
 }
 
+//Test for flutter 
+
+router.get("/test", (req, res, next) => {
+
+    var currentDate = new Date();
+    var currMonth = currentDate.getMonth();
+
+    // res.status(200).json({
+    //     message: month,
+    // });
+
+    GetQuery(Spending, function (result, test) {
+        // console.log(result,test);
+        var totalExp = formatMoney(result[0].total);
+
+        try {
+            Category.find({}, { _id: 0, description: 0 })
+                .then(out => {
+                    // console.log(out);
+                    //res.status(200).render('index', {
+                    //    total: totalExp,
+                    //    item: test,
+                    //    month: monthNames[currMonth],
+                    //    year: currentDate.getFullYear(),
+                    //    category: out
+                    //});
+					 res.status(200).json({
+					     message: test,
+					 });
+                }).catch(err => {
+                    throw new Error(err);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
+});
+
+//Test for flutter End
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
     try {
