@@ -193,7 +193,7 @@ router.get("/test", (req, res, next) => {
                     //    category: out
                     //});
 					 res.status(200).json({
-					     
+					     out
 					 });
                 }).catch(err => {
                     throw new Error(err);
