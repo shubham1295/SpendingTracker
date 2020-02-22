@@ -193,7 +193,11 @@ router.get("/test", (req, res, next) => {
                     //    category: out
                     //});
 					 res.status(200).json({
-					     item: test
+						 total: totalExp,
+						 item: test,
+						 month: monthNames[currMonth],
+						 year: currentDate.getFullYear(),
+						 category: out
 					 });
                 }).catch(err => {
                     throw new Error(err);
