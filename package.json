@@ -14,7 +14,7 @@
     "ejs": "^3.1.2",
     "express": "^4.16.3",
     "mongodb": "^3.5.7",
-    "mongoose": "^5.9.11",
+    "mongoose": "^5.9.13",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.3",
     "sugar": "^2.0.6"
