@@ -117,10 +117,12 @@ function GetFormattedDate(date) {
 function GetQuery(Spending, callback) {
     var currentDate = new Date();
     var currMonth = currentDate.getMonth() + 1;
+    // Modification for issue#147 (Total spending not showing proper)
+    var currYear = currentDate.getFullYear();
 
     Spending.aggregate([
-        { $project: { month: { $month: '$date' }, cost: true } },
-        { $match: { month: currMonth } },
+        { $project: { month: { $month: '$date' }, year: { $year: '$date' }, cost: true } },
+        { $match: { month: currMonth, year: currYear } },
         {
             $group: {
                 _id: null,
