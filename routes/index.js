@@ -13,7 +13,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 router.get("/", (req, res, next) => {
 
     var currentDate = new Date();
-    var currMonth = currentDate.getMonth();
+    // var currMonth = currentDate.getMonth();
 
     // res.status(200).json({
     //     message: month,
@@ -30,7 +30,7 @@ router.get("/", (req, res, next) => {
                     res.status(200).render('index', {
                         total: totalExp,
                         item: test,
-                        month: monthNames[currMonth],
+                        month: monthNames[currentDate.getMonth()],
                         year: currentDate.getFullYear(),
                         category: out
                     });
@@ -66,10 +66,9 @@ router.post("/", (req, res, next) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ result }, null, 3));
 
-    })
-        .catch(err => {
-            console.log(err);
-        });
+    }).catch(err => {
+        console.log(err);
+    });
 
 
 });
@@ -80,21 +79,19 @@ router.get("/price", (req, res, next) => {
         var totalExp = formatMoney(result[0].total);
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ totalExp, test }, null, 3));
-        console.log(totalExp, test);
+        // console.log(totalExp, test);
     });
 });
 
 router.get('/search_item/:category', (req, res, next) => {
 
-    Spending.distinct("item", { category: req.params.category })
-        .then(result => {
-            res.status(200).json({
-                message: result
-            });
-        })
-        .catch(err => {
-            console.log(err);
+    Spending.distinct("item", { category: req.params.category }).then(result => {
+        res.status(200).json({
+            message: result
         });
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
 router.get('/graph', (req, res, next) => {
@@ -103,7 +100,7 @@ router.get('/graph', (req, res, next) => {
 
 module.exports = router;
 
-function GetFormattedDate(date) {
+function GetFormattedDate (date) {
     var fields = date.split('/');
 
     var day = fields[0];
@@ -114,15 +111,15 @@ function GetFormattedDate(date) {
     return date;
 }
 
-function GetQuery(Spending, callback) {
+function GetQuery (Spending, callback) {
     var currentDate = new Date();
-    var currMonth = currentDate.getMonth() + 1;
+    // var currMonth = currentDate.getMonth() + 1;
     // Modification for issue#147 (Total spending not showing proper)
-    var currYear = currentDate.getFullYear();
+    // var currYear = currentDate.getFullYear();
 
     Spending.aggregate([
         { $project: { month: { $month: '$date' }, year: { $year: '$date' }, cost: true } },
-        { $match: { month: currMonth, year: currYear } },
+        { $match: { month: currentDate.getMonth() + 1, year: currentDate.getFullYear() } },
         {
             $group: {
                 _id: null,
@@ -169,7 +166,7 @@ function GetQuery(Spending, callback) {
 }
 
 
-function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+function formatMoney (amount, decimalCount = 2, decimal = ".", thousands = ",") {
     try {
         decimalCount = Math.abs(decimalCount);
         decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
