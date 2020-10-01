@@ -13,8 +13,8 @@
     "custom-env": "^2.0.1",
     "ejs": "^3.1.5",
     "express": "^4.16.3",
-    "mongodb": "^3.6.0",
-    "mongoose": "^5.10.5",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.7",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
     "sugar": "^2.0.6"
